@@ -1,5 +1,14 @@
 starting dev
 
+to start type
+`
+docker-compose up
+`
+then install dependecies by running
+`
+npm install
+`
+
 npm run db:dev:restart
 - initialize db
 
