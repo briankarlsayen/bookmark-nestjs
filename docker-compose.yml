@@ -1,7 +1,23 @@
 version: '3.8'
 
 services:
+  nest-api:
+    container_name: nest-api
+    build:
+      context: .
+      target: development
+    volumes:
+    - .:/usr/src/app
+    - /usr/src/app/node_modules
+    ports:
+      - 3000:3000
+    depends_on:
+      - dev-db
+    env_file:
+      - .env
+
   dev-db:
+    container_name: dev-db
     image: postgres:13
     ports:
       - 5432:5432
@@ -9,7 +25,11 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123
       POSTGRES_DB: nest
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
   test-db:
+    container_name: test-db
     image: postgres:13
     ports:
       - 5435:5432
@@ -17,3 +37,6 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123
       POSTGRES_DB: nest
+
+volumes:
+  pgdata:
